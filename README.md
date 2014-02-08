@@ -1,6 +1,5 @@
-reginaldo
+Reginaldo - Ho pianto per lui
 =========
-Ho pianto per Reginaldo
 
 An advanced, modular and multi-platform (*citation needed*) clipboard manager.
 

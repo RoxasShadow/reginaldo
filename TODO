@@ -1,0 +1,4 @@
+Use a listener to observe the clipboard
+Make a wrapper for keyboard shortcuts to perform the pasting through the history
+UNIX support
+Run as daemon

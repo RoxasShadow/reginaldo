@@ -16,9 +16,20 @@
  */
  
 #include <stdbool.h>
+#include <reginaldo/paste.h>
 #include <reginaldo/windows.h>
 
-char* getClipboard(void) {
+/*
+  Virtual-Key Codes - MSDN
+    http://msdn.microsoft.com/en-us/library/ms927178.aspx
+*/
+#define  BASE_KEY VK_LSHIFT
+#define  SHIFTED  0x8000
+#define  F1       112
+#define  F12      123
+#define  F_DIFF   111
+
+char* getInTheClipboard(void) {
   if(!OpenClipboard(0))
       return NULL;
 
@@ -38,7 +49,7 @@ bool clearClipboard(void) {
   return cleared;
 }
 
-bool putClipboard(const char* string) {
+bool putInTheClipboard(const char* string) {
   const size_t  len  = strlen(string) + 1;
         HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
 
@@ -55,6 +66,38 @@ bool putClipboard(const char* string) {
   CloseClipboard();
   
   return copied;
+}
+
+t_paste getPasteOnShortcut(int id, char** history) {
+  short baseKey = GetKeyState(BASE_KEY);
+  short key;
+  t_paste paste;
+
+  for(int i = F1; i <= F12; ++i) {
+    key = GetKeyState(i);
+
+    if((baseKey & SHIFTED) && (key & SHIFTED)) {
+      int fKey       = i  - F_DIFF;
+      int selectedId = ((id - 1) - 13);
+
+      if(selectedId < 0)
+        selectedId = 0;
+      selectedId += fKey;
+
+      if(id - 1 >= selectedId) {
+        putInTheClipboard(history[selectedId]);
+        paste.id         = selectedId;
+        paste.content    = history[selectedId];
+      }
+      else {
+        paste.id         = selectedId;
+        paste.content    = NULL;
+      }
+      break;
+    }
+  }
+
+  return paste;
 }
 
 void sleep(unsigned int interval) {

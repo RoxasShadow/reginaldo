@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <reginaldo.h>
+#include <reginaldo/paste.h>
 #include <reginaldo/windows.h>
 #define  INTERVAL 500
 
@@ -35,7 +36,6 @@ int main(void) {
   char** history;
   char*  string;
   int    id = 0;
-  int    i;
 
   signal(SIGINT, watchdog);
 
@@ -46,8 +46,16 @@ int main(void) {
   clearClipboard();
 
   while(raised == 0) {
+    t_paste paste = getPasteOnShortcut(id, history);
+    if(!&paste) {
+      if(paste.content == NULL)
+        printf("Paste #%d has been copied in the clipboard!\n", paste.id);
+      else
+        printf("Paste #%d doesn't exist.\n",                    paste.id);
+    }
+
     sleep(INTERVAL);
-    string = getClipboard();
+    string = getInTheClipboard();
     if(presentInTheClipboard(history, id, string))
       continue;
 
@@ -55,7 +63,7 @@ int main(void) {
       printf("%d > ", id + 1);
       scanf("%s", string);
 
-      if(putClipboard(string))
+      if(putInTheClipboard(string))
         printf("'%s' copied. ", string);
     */
 
@@ -67,19 +75,19 @@ int main(void) {
     
     history[id] = (char*) malloc( (strlen(string) + 1) * sizeof(char));
     if(history[id] == NULL) {
-      fprintf(stderr, "Memory allocation error (2).\n");
+      fprintf(stderr, "Memory allocation error.\n");
       exit(EXIT_FAILURE);
     }
 
     strcpy(history[id++], string);
 
     printf("History (#%d): ", id - 1);
-    for(i = 1; i < id; i++)
+    for(int i = 1; i < id; i++)
       printf(i + 1 == id ? "'%s'.\n" : "'%s', ",  history[i]);
   }
 
   printf("Graceful shutdown...\n");
-  for(i = 0; i < id; ++i)
+  for(int i = 0; i < id; ++i)
     free(history[i]);
   free(history);
 

@@ -15,8 +15,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef REGINALDO
+#define REGINALDO
+
 #include <stdbool.h>
 #include <signal.h>
 
-void  watchdog              (int);
-bool  presentInTheClipboard (char**, int id, const char*);
+void  watchdog             (int);
+bool  presentInTheClipboard(char**, int id, const char*);
+
+#endif

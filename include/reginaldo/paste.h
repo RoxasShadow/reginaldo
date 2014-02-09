@@ -15,15 +15,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef REGINALDO_WINDOWS
-#define REGINALDO_WINDOWS
+#ifndef REGINALDO_PASTE
+#define REGINALDO_PASTE
 
-#include <windows.h>
-
-char*   getInTheClipboard (void);
-bool    clearClipboard    (void);
-bool    putInTheClipboard (const char*);
-t_paste getPasteOnShortcut(int, char**);
-void    sleep             (unsigned int);
+typedef struct paste {
+  int   id;
+  char* content;
+} t_paste;
 
 #endif

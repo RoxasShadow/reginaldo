@@ -1,4 +1,3 @@
-Use a listener to observe the clipboard
-Make a wrapper for keyboard shortcuts to perform the pasting through the history
+Add customization (clearClipboard, baseKey, interval)
 UNIX support
 Run as daemon

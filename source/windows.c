@@ -16,18 +16,9 @@
  */
  
 #include <stdbool.h>
+#include <reginaldo/config.h>
 #include <reginaldo/paste.h>
 #include <reginaldo/windows.h>
-
-/*
-  Virtual-Key Codes - MSDN
-    http://msdn.microsoft.com/en-us/library/ms927178.aspx
-*/
-#define  BASE_KEY VK_LSHIFT
-#define  SHIFTED  0x8000
-#define  F1       112
-#define  F12      123
-#define  F_DIFF   111
 
 char* getInTheClipboard(void) {
   if(!OpenClipboard(0))

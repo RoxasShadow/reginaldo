@@ -18,9 +18,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <reginaldo.h>
+#include <reginaldo/config.h>
 #include <reginaldo/paste.h>
 #include <reginaldo/windows.h>
-#define  INTERVAL 500
 
 sig_atomic_t raised = 0;
 

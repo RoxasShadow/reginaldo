@@ -7,5 +7,6 @@ Reginaldo - Ho pianto per lui
 How to use
 ----------
 Just run it and do what you do usually.
+
 When you want to take an old paste from the history, just press at the same time
 `LEFT SHIFT` + `F1...F12`, and it will be loaded in your clipboard.
